@@ -13,7 +13,9 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "simplemde": "^1.11.2",
+    "simply": "^0.0.0"
   },
   "devDependencies": {
     "electron": "^34.2.0",
