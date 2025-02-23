@@ -1,9 +1,215 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>My Electron App</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Application</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="./node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
-    <h1>Hello Electron!</h1>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Contact List Section -->
+        <div class="col-4" id="left">
+          <ul class="contact list-unstyled mb-0 mt-2">
+            <li class="p-2 card">
+              <div class="card-body">
+                <div class="d-flex">
+                  <div>
+                    <img
+                      class="rounded-pill me-3"
+                      width="60"
+                      src="https://randomuser.me/api/portraits/women/56.jpg"
+                      alt="User Avatar"
+                    />
+                  </div>
+                  <div>
+                    <p class="fw-bold mb-0 text-light">Alex Alexis</p>
+                    <p class="small text-muted">
+                      Lorem ipsum dolor sit amet...
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Chat Section -->
+        <div class="col-8" id="right">
+          <div class="chats">
+            <!-- Chat messages will be dynamically inserted here -->
+          </div>
+
+          <!-- Message Input Form -->
+          <form class="form-message mt-3">
+            <div class="row">
+              <div class="col">
+                <textarea
+                  class="form-control rounded-pill"
+                  placeholder="Type your message..."
+                ></textarea>
+              </div>
+              <div class="col-auto">
+                <button
+                  type="submit"
+                  class="btn btn-primary rounded-circle send-button"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    width="24"
+                    height="24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap Dependencies -->
+    <script src="./node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Contact List Script -->
+    <script>
+      function createContacts() {
+        const contacts = [
+          {
+            name: "Alex Alexis",
+            image: "https://randomuser.me/api/portraits/women/56.jpg",
+            last_chat: [
+              {
+                date: "9:15 AM",
+                message:
+                  "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+              },
+            ],
+          },
+          {
+            name: "Ramon Reed",
+            image: "https://randomuser.me/api/portraits/women/59.jpg",
+            last_chat: [
+              {
+                date: "9:15 AM",
+                message: "Lorem Hello!",
+              },
+            ],
+          },
+          {
+            name: "Eli Barrett",
+            image: "https://randomuser.me/api/portraits/women/58.jpg",
+            last_chat: [
+              {
+                date: "8:55 PM",
+                message: "Lorem ipsum dolor sit ...",
+              },
+            ],
+          },
+        ];
+
+        const contactList = contacts
+          .map(
+            (contact) => `
+                <li class="p-2 card mt-2">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div>
+                                <img class="rounded-pill me-3" width="60" src="${contact.image}" alt="${contact.name}">
+                            </div>
+                            <div>
+                                <p class="fw-bold mb-0 text-light">${contact.name}</p>
+                                <p class="small text-muted">${contact.last_chat[0].message}</p>
+                            </div>
+                            <div>
+                                <p class="small text-muted">${contact.last_chat[0].date}</p>
+                                <span class="badge bg-danger rounded-pill float-end">1</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            `
+          )
+          .join("");
+
+        document.querySelector(".contact").innerHTML = contactList;
+      }
+
+      // Initialize contacts
+      createContacts();
+    </script>
+
+    <!-- Chat Messages Script -->
+    <script>
+      function createChats() {
+        const chats = [
+          {
+            user: {
+              name: "Alex Alexis",
+              image: "https://randomuser.me/api/portraits/women/56.jpg",
+            },
+            chat: {
+              date: "9:15 AM",
+              message:
+                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus reprehenderit voluptatibus cumque, deserunt deleniti consequatur adipisci nisi consequuntur sunt itaque? Sunt aspernatur, ratione labore ipsam enim unde itaque dolorum magni?",
+            },
+          },
+          {
+            user: {
+              name: "Eli Barrett",
+              image: "https://randomuser.me/api/portraits/women/58.jpg",
+            },
+            chat: {
+              date: "9:50 AM",
+              message:
+                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus reprehenderit voluptatibus cumque, deserunt deleniti consequatur adipisci nisi consequuntur sunt itaque? Sunt aspernatur, ratione labore ipsam enim unde itaque dolorum magni?",
+            },
+          },
+        ];
+
+        const chatMessages = chats
+          .map(
+            (chat) => `
+                <div class="d-flex chat">
+                    <div class="w-75">
+                        <div class="card bg-dark">
+                            <div class="card-body text-light">
+                                ${chat.chat.message}
+                            </div>
+                        </div>
+                        <p class="small text-muted float-end">${chat.chat.date}</p>
+                    </div>
+                    <div class="w-25 d-flex align-items-end">
+                        <img class="rounded-pill ms-3 avatar" src="${chat.user.image}" alt="${chat.user.name}">
+                    </div>
+                </div>
+            `
+          )
+          .join("");
+
+        document.querySelector(".chats").innerHTML = chatMessages;
+      }
+
+      // Initialize chats
+      createChats();
+    </script>
   </body>
 </html>
